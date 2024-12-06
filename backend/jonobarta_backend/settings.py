@@ -26,6 +26,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders.middleware.CorsMiddleware',
+    'corsheaders',
     'user_management',
     'comment',
     'crime_stat',
@@ -34,6 +36,8 @@ INSTALLED_APPS = [
     'post',
     'transparent_market',
 ]
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
