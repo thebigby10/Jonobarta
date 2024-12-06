@@ -1,13 +1,19 @@
 from enum import verify
 from re import L
+from django.forms.models import model_to_dict
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 
 import json
 from datetime import datetime
+from django.http import JsonResponse
 
 from django.views.decorators.csrf import csrf_exempt
+
+from django.forms.models import model_to_dict
+
+from django.contrib.auth.models import User
 
 #import models
 from user_management.models import user_management
@@ -148,3 +154,25 @@ def public_awareness(request):
 
 def all_posts(request):
     return
+
+    if request.method == 'GET':
+        all_posts = post.objects.all()
+        all_posts_data = []
+        for lpost in all_posts:
+            post_title = lpost.post_title
+            post_image = lpost.post_image_url
+            post_location = model_to_dict(location.objects.get(location_id = lpost.location_id))
+            user = {
+                "phone_number" : model_to_dict(user_management.objects.get(user_id = lpost.user_id))[username],
+                "name": model_to_dict(User.objects.get(user_id = lpost.user_id))[first_name],
+                "image": model_to_dict(user_management.objects.get(user_id = lpost.user_id))[user_image_url],
+            }
+
+            all_posts_data.append({
+                "post_title":post_title,
+                "post_image":post_image,
+                " post_location":post_location,
+               "user":user
+            })
+    return JsonResponse(all_posts_data, safe=False)
+
