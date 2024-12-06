@@ -4,15 +4,18 @@ import "leaflet/dist/leaflet.css";
 
 const locations = [
   { id: 1, lat: 23.8103, lng: 90.4125, isSpecial: true }, // Dhaka (Red)
-  { id: 2, lat: 22.3475, lng: 91.8123, isSpecial: false }, // Chittagong
+  { id: 1, lat: 23.5, lng: 90.9, isSpecial: true }, // Dhaka (Red)
+  { id: 1, lat: 23.6, lng: 90.4125, isSpecial: true }, // Dhaka (Red)
+  { id: 1, lat: 23.8103, lng: 90.4125, isSpecial: true }, // Dhaka (Red)
+  { id: 2, lat: 22.3475, lng: 91.8123, isSpecial: true }, // Chittagong
   { id: 3, lat: 24.3636, lng: 88.6241, isSpecial: true }, // Rajshahi
-  { id: 4, lat: 24.8949, lng: 91.8687, isSpecial: false }, // Sylhet
+  { id: 4, lat: 24.8949, lng: 91.8687, isSpecial: true }, // Sylhet
   { id: 5, lat: 22.8419, lng: 89.5632, isSpecial: true }, // Khulna
-  { id: 6, lat: 23.4607, lng: 91.1809, isSpecial: false }, // Comilla
+  { id: 6, lat: 23.4607, lng: 91.1809, isSpecial: true }, // Comilla
   { id: 7, lat: 22.701, lng: 90.3535, isSpecial: true }, // Barisal
   { id: 8, lat: 25.7439, lng: 89.2567, isSpecial: true }, // Rangpur
   { id: 9, lat: 21.4339, lng: 91.987, isSpecial: true }, // Cox's Bazar
-  { id: 10, lat: 24.7471, lng: 90.4203, isSpecial: false }, // Mymensingh
+  { id: 10, lat: 24.7471, lng: 90.4203, isSpecial: true }, // Mymensingh
 ];
 
 const MapComponent = () => {
