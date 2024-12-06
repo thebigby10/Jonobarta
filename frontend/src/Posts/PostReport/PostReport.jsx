@@ -9,6 +9,7 @@ const PostReport = () => {
   const [lat, setLat] = useState("");
   const [lon, setLon] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const fetchCoordinates = () => {
     fetch(
@@ -50,6 +51,9 @@ const PostReport = () => {
         location={location}
         setLocation={setLocation}
         setImage={setImage}
+        setLoading={setLoading}
+        loading = {loading}
+        image={image}
       />
 
       {isModalOpen && (

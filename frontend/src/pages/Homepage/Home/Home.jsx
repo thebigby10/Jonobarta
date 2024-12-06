@@ -14,13 +14,13 @@ const Home = () => {
   
         {/* Main Feed */}
         <div className="flex-1 space-y-4 overflow-auto max-h-full">
-          <div className="p-4 rounded-md bg-gray-50 ">
+          {/* <div className="p-4 rounded-md bg-gray-50 ">
             <input
               type="text"
               placeholder="Start a post"
               className="w-full bg-gray-100 p-2 rounded-md border border-gray-300 focus:outline-none"
             />
-          </div>
+          </div> */}
           {arr.map((a, idx) => (
             <div
               key={idx}

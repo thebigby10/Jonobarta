@@ -6,7 +6,9 @@ const LeftSidebar = () => {
       <div className="bg-white p-4 rounded-md ">
         <PostReport/>
       </div>
-      <div className="bg-white p-4 rounded-md ">filter form</div>
+      <div className="bg-white p-4 rounded-md ">
+        
+      </div>
     </div>
   );
 };

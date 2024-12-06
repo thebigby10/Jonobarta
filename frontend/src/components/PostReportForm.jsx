@@ -1,3 +1,5 @@
+import { uploadImage } from "../utils/uploadImage";
+
 /* eslint-disable react/prop-types */
 const PostReportForm = ({
   handleContinue,
@@ -6,6 +8,9 @@ const PostReportForm = ({
   location,
   setLocation,
   setImage,
+  setLoading,
+  loading,
+  image,
 }) => {
   return (
     <form className="max-w-md mx-auto bg-white" onSubmit={handleContinue}>
@@ -42,10 +47,29 @@ const PostReportForm = ({
         type="file"
         accept="image/*"
         className="block w-full text-sm text-gray-500 border border-gray-300 rounded-lg p-2 mb-1"
-        onChange={(e) => setImage(e.target.files[0])}
+        onChange={async (e) => {
+          setLoading(true);
+          try {
+            setImage(await uploadImage(e.target.files[0]));
+            setLoading(false);
+          } catch (error) {
+            console.log(error);
+          } finally {
+            setLoading(false);
+          }
+        }}
       />
+      <div>
+        <p className="text-blue-400 my-1" hidden={!loading}>
+          {loading && "Uploading image..."}
+        </p>
+        <p className="text-green-400 my-1" hidden={!image}>
+          {image && "Upload success.."}
+        </p>
+      </div>
 
       <button
+        disabled={loading}
         type="submit"
         className="w-full bg-green-500 text-white font-bold py-1 rounded-lg"
       >

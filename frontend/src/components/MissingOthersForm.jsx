@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
+import { uploadImage } from "../utils/uploadImage";
 
 const MissingOthersForm = ({
   location,
@@ -11,6 +12,7 @@ const MissingOthersForm = ({
 }) => {
   const [details, setDetails] = useState("");
   const [FIRImage, setFIRImage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -63,11 +65,30 @@ const MissingOthersForm = ({
         type="file"
         accept="image/*"
         className="block w-full text-sm text-gray-500 border border-gray-300 rounded-lg p-2 mb-1"
-        onChange={(e) => setFIRImage(e.target.files[0])}
+        onChange={async (e) => {
+          setLoading(true);
+          try {
+            setFIRImage(await uploadImage(e.target.files[0]));
+          } catch (error) {
+            console.log(error);
+          } finally {
+            setLoading(false);
+          }
+        }}
       />
+
+      <div>
+        <p className="text-blue-400 my-1" hidden={!loading}>
+          {loading && "Uploading image..."}
+        </p>
+        <p className="text-green-400 my-1" hidden={!FIRImage}>
+          {FIRImage && "Upload success.."}
+        </p>
+      </div>
 
       {/* Submit Button */}
       <button
+        disabled={loading}
         type="submit"
         className="w-full bg-green-400 text-white font-bold py-2 rounded-lg"
       >

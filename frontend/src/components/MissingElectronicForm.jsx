@@ -1,7 +1,15 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
+import { uploadImage } from "../utils/uploadImage";
 
-const MissingElectronicForm = ({ location, lat, lon, imageUrl, closeModal, category }) => {
+const MissingElectronicForm = ({
+  location,
+  lat,
+  lon,
+  imageUrl,
+  closeModal,
+  category,
+}) => {
   const [deviceType, setDeviceType] = useState("");
   const [brand, setBrand] = useState("");
   const [deviceName, setDeviceName] = useState("");
@@ -10,11 +18,12 @@ const MissingElectronicForm = ({ location, lat, lon, imageUrl, closeModal, categ
   const [eiin, setEiim] = useState("");
   const [serialNumber, setSerialNumber] = useState("");
   const [FIRImage, setFIRImage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!deviceType || !brand || !deviceName || !modelNumber ) {
+    if (!deviceType || !brand || !deviceName || !modelNumber) {
       alert("Please fill in all required fields.");
       return;
     }
@@ -29,7 +38,7 @@ const MissingElectronicForm = ({ location, lat, lon, imageUrl, closeModal, categ
       serialNumber,
       location: { lat, lon, locationDetails: location },
       imageUrl,
-      FIRImage
+      FIRImage,
     };
 
     console.log(missingElectronicData);
@@ -38,7 +47,9 @@ const MissingElectronicForm = ({ location, lat, lon, imageUrl, closeModal, categ
 
   return (
     <form onSubmit={handleSubmit} className="max-h-[80vh] overflow-auto">
-      <h2 className="text-xl font-bold text-center">Missing Electronic Report</h2>
+      <h2 className="text-xl font-bold text-center">
+        Missing Electronic Report
+      </h2>
 
       {/* Device Type */}
       <label className="block">
@@ -145,11 +156,30 @@ const MissingElectronicForm = ({ location, lat, lon, imageUrl, closeModal, categ
         type="file"
         accept="image/*"
         className="block w-full text-sm text-gray-500 border border-gray-300 rounded-lg p-2 mb-1"
-        onChange={(e) => setFIRImage(e.target.files[0])}
+        onChange={async (e) => {
+          setLoading(true);
+          try {
+            setFIRImage(await uploadImage(e.target.files[0]));
+          } catch (error) {
+            console.log(error);
+          } finally {
+            setLoading(false);
+          }
+        }}
       />
+
+      <div>
+        <p className="text-blue-400 my-1" hidden={!loading}>
+          {loading && "Uploading image..."}
+        </p>
+        <p className="text-green-400 my-1" hidden={!FIRImage}>
+          {FIRImage && "Upload success.."}
+        </p>
+      </div>
 
       {/* Submit Button */}
       <button
+        disabled={loading}
         type="submit"
         className="w-full bg-green-400 text-white font-bold py-2 rounded-lg"
       >

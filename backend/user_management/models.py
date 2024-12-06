@@ -12,3 +12,4 @@ class user_management(models.Model):
     user_image_url = models.URLField(max_length=100)
     verified = models.BooleanField(default=False)
     otp = models.CharField(max_length=4, default='8888')
+

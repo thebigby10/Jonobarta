@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
+import { uploadImage } from "../utils/uploadImage";
 
 const MissingPersonForm = ({
   location,
@@ -12,17 +13,18 @@ const MissingPersonForm = ({
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [height, setHeight] = useState("");
-  const [hairColor, setHairColor] = useState("");
+  const [skinTone, setSkinTone] = useState("");
   const [dress, setDress] = useState("");
   const [lastSeen, setLastSeen] = useState("");
   const [details, setDetails] = useState("");
   const [gender, setGender] = useState("");
   const [FIRImage, setFIRImage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!name || !age || !imageUrl || !dress || !gender) {
+    if (!name || !age || !imageUrl || !dress || !gender || !skinTone) {
       alert("Please fill in all required fields.");
       return;
     }
@@ -32,7 +34,7 @@ const MissingPersonForm = ({
       age,
       imageUrl,
       height,
-      hairColor,
+      skinTone,
       dress,
       location: { lat, lon, locationDetails: location },
       lastSeen,
@@ -97,15 +99,16 @@ const MissingPersonForm = ({
         />
       </label>
 
-      {/* Hair Color */}
+      {/* skin tone*/}
       <label className="block">
-        <span className="text-sm font-bold">Hair Color (Optional)</span>
+        <span className="text-sm font-bold">Skin Tone *</span>
         <input
           type="text"
-          value={hairColor}
-          onChange={(e) => setHairColor(e.target.value)}
-          placeholder="Enter hair color"
+          value={skinTone}
+          onChange={(e) => setSkinTone(e.target.value)}
+          placeholder="Enter skin tone"
           className="w-full border rounded-lg p-2"
+          required
         />
       </label>
 
@@ -176,8 +179,26 @@ const MissingPersonForm = ({
         type="file"
         accept="image/*"
         className="block w-full text-sm text-gray-500 border border-gray-300 rounded-lg p-2 mb-1"
-        onChange={(e) => setFIRImage(e.target.files[0])}
+        onChange={async (e) => {
+          setLoading(true);
+          try {
+            setFIRImage(await uploadImage(e.target.files[0]));
+          } catch (error) {
+            console.log(error);
+          } finally {
+            setLoading(false);
+          }
+        }}
       />
+
+      <div>
+        <p className="text-blue-400 my-1" hidden={!loading}>
+          {loading && "Uploading image..."}
+        </p>
+        <p className="text-green-400 my-1" hidden={!FIRImage}>
+          {FIRImage && "Upload success.."}
+        </p>
+      </div>
 
       {/* Details */}
       <label className="block">
@@ -192,6 +213,7 @@ const MissingPersonForm = ({
 
       {/* Submit Button */}
       <button
+        disabled={loading}
         type="submit"
         className="w-full bg-green-400 text-white font-bold py-2 rounded-lg"
       >
