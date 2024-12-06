@@ -11,6 +11,7 @@ const Post = ({ post }) => {
           />
           <div>
             <h3 className="font-medium">{post?.name}</h3>
+            <p className="text-sm">6 mins ago</p>
           </div>
         </div>
         <button className="text-gray-500 hover:text-gray-700">...</button>
