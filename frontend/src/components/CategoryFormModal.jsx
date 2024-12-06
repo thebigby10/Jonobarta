@@ -1,7 +1,10 @@
 /* eslint-disable react/prop-types */
 
+import CrimeReportForm from "./CrimeReportForm";
 import MissingElectronicForm from "./MissingElectronicForm";
+import MissingOthersForm from "./MissingOthersForm";
 import MissingPersonForm from "./MissingPersonForm";
+import PublicAwarenessForm from "./PublicAwarenessForm";
 
 const CategoryFormModal = ({
   category,
@@ -35,10 +38,38 @@ const CategoryFormModal = ({
             category={category}
           />
         );
+      case "MISSING_OTHERS":
+        return (
+          <MissingOthersForm
+            imageUrl={image}
+            lat={lat}
+            lon={lon}
+            closeModal={closeModal}
+            location={location}
+            category={category}
+          />
+        );
       case "CRIME":
-        return <CrimeReportForm location={location} lat={lat} lon={lon} />;
+        return (
+          <CrimeReportForm
+            imageUrl={image}
+            lat={lat}
+            lon={lon}
+            closeModal={closeModal}
+            location={location}
+            category={category}
+          />
+        );
       case "PUBLIC_AWARENESS":
-        return <PublicAwarenessForm location={location} lat={lat} lon={lon} />;
+        return (
+          <PublicAwarenessForm
+            location={location}
+            lat={lat}
+            lon={lon}
+            category={category}
+            closeModal={closeModal}
+          />
+        );
       default:
         return <div>No form available for this category.</div>;
     }
@@ -58,43 +89,5 @@ const CategoryFormModal = ({
     </div>
   );
 };
-
-const CrimeReportForm = ({ location, lat, lon }) => (
-  <form>
-    <p>Location: {location}</p>
-    <p>
-      Coordinates: {lat}, {lon}
-    </p>
-    <textarea
-      placeholder="Describe the crime"
-      className="w-full border rounded-lg p-2 mb-2"
-    />
-    <button
-      type="submit"
-      className="w-full bg-green-400 text-white py-1 rounded-lg"
-    >
-      Submit
-    </button>
-  </form>
-);
-
-const PublicAwarenessForm = ({ location, lat, lon }) => (
-  <form>
-    <p>Location: {location}</p>
-    <p>
-      Coordinates: {lat}, {lon}
-    </p>
-    <textarea
-      placeholder="Public awareness message"
-      className="w-full border rounded-lg p-2 mb-2"
-    />
-    <button
-      type="submit"
-      className="w-full bg-green-400 text-white py-1 rounded-lg"
-    >
-      Submit
-    </button>
-  </form>
-);
 
 export default CategoryFormModal;
