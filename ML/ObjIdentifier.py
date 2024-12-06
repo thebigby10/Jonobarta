@@ -1,3 +1,5 @@
+import ast
+
 import torch
 import requests
 from io import BytesIO
@@ -7,6 +9,7 @@ from PIL import Image
 from torchvision import models, transforms
 from torchvision.models import ResNet50_Weights
 from facenet_pytorch import MTCNN, InceptionResnetV1
+import numpy as np
 class ImageParser:
     def __init__(self):
         self.image_url= None
@@ -45,10 +48,11 @@ class ObjIdentifier:
             print(f"Error generating vector: {e}")
 
     def Similarity_factor(self, vector1, vector2):
-            return 1 - cosine(vector1, vector2)
+        result= 1- cosine(vector1, vector2)
+        return 0.6< result
 
 class PersonIdentifier:
-    def __init__(self, threshold=0.6):
+    def __init__(self, threshold=0.5):
         self.device= torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
         self.mtcnn= MTCNN(keep_all=True, device=self.device)
         self.model= InceptionResnetV1(pretrained='vggface2').eval().to(self.device)
@@ -60,15 +64,21 @@ class PersonIdentifier:
         if faces is not None and len(faces)>0:
             embeddings= self.model(faces.to(self.device))
             embedding= embeddings[0].detach().cpu().numpy()
-            return embedding
+            embedding= embedding.flatten()
+            embedding_list = embedding.tolist()
+            return embedding_list
         else:
             return None
-    def is_Same(self, image1_URL, image2_URL):
-        vector1= self.embedding_generator(image1_URL)
-        vector2= self.embedding_generator(image2_URL)
-        if vector1 is not None and vector2 is not None:
-            distance= cosine(vector1,vector2)
-            return distance> self.threshold
+    def is_Same(self, image_vector1, image_vector2):
+        if image_vector2 is not None and image_vector1 is not None:
+            image_vector1 = ast.literal_eval(image_vector1)
+            image_vector2 = ast.literal_eval(image_vector2)
+            vector1 = np.array(image_vector1, dtype=np.float64)  # or dtype=np.float32 if needed
+            vector2 = np.array(image_vector2, dtype=np.float64)
+            vector1= vector1.flatten()
+            vector2= vector2.flatten()
+            distance= cosine(vector1, vector2)
+            return distance<self.threshold
         else:
             print("No face detected")
             return False

@@ -17,7 +17,8 @@ def identify_object():
     image1vector = request.json['image_vector']
     image2vector = request.json['image_vector']
     if image1vector != None or image2vector != None:
-        return jsonify(obj_id.identify_object(image1vector, image2vector))
+        result= obj_id.Similarity_factor(image1vector, image2vector)
+        return jsonify({"same":f"{result}"})
     else:
         return jsonify({"status": "error", "message": "No image vector provided."}), 400
 
@@ -33,10 +34,11 @@ def person_vector():
 @app.route('/identify_person', methods=['POST'])
 def identify_person():
     person_id = PersonIdentifier()
-    image1vector = request.json['image_vector']
-    image2vector= request.json['image_vector']
+    image1vector = request.json['image_vector_1']
+    image2vector= request.json['image_vector_2']
     if image1vector != None or image2vector != None:
-        return jsonify(person_id.is_Same(image1vector, image2vector))
+        result = person_id.is_Same(image1vector, image2vector)
+        return jsonify({"same":f"{result}"})
     else:
         return jsonify({"status": "error", "message": "No image vector provided."}), 400
 
