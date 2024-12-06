@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import LeftSidebar from "../../../components/LeftSidebar";
 import Post from "../components/Post";
 import axios from "axios";
+import MapComponent from "../../../components/MapComponent";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -35,7 +36,9 @@ const Home = () => {
       </div>
 
       {/* Right Sidebar */}
-      <div className="w-60 erflow-auto max-h-full"></div>
+      <div className="w-60 erflow-auto max-h-full">
+        <MapComponent/>
+      </div>
     </div>
   );
 };
