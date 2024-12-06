@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import { uploadImage } from "../utils/uploadImage";
+import axios from "axios";
 
 const MissingPersonForm = ({
   location,
@@ -21,7 +22,7 @@ const MissingPersonForm = ({
   const [FIRImage, setFIRImage] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!name || !age || !imageUrl || !dress || !gender || !skinTone) {
@@ -34,7 +35,7 @@ const MissingPersonForm = ({
       age,
       imageUrl,
       height,
-      skinTone,
+      hairColor: skinTone,
       dress,
       location: { lat, lon, locationDetails: location },
       lastSeen,
@@ -44,7 +45,16 @@ const MissingPersonForm = ({
     };
 
     console.log(missingPersonData);
-    closeModal();
+
+    try {
+      const data = await axios.post(
+        `http://127.0.0.1:8000/post/${category}`,
+        missingPersonData
+      );
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

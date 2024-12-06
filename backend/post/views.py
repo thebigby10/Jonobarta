@@ -18,7 +18,6 @@ from .models import post
 #/post/MISSING_PERSON
 # Create your views here.
 @csrf_exempt
-@login_required
 def missing_person(request):
     if request.method == 'POST':
         data = json.loads(request.body)
@@ -147,6 +146,5 @@ def public_awareness(request):
         verified_id = data['verifiedId']
     return
 
-@login_required
-def add_missing_person(request):
+def all_posts(request):
     return
