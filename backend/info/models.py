@@ -36,7 +36,7 @@ class missing_person_info(models.Model): #ene missing and found both er info tha
     created_at = models.DateTimeField(auto_now_add=True)
     last_seen = models.DateTimeField(auto_now=True)
     details = models.CharField(max_length=1000)
-    verified_id = models.ForeignKey(verified, on_delete=models.CASCADE)
+    # verified_id = models.ForeignKey(verified, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -56,7 +56,7 @@ class electronic_info(models.Model):
     serial_numeber = models.CharField(max_length=100)
     location_id = models.ForeignKey(location, on_delete=models.CASCADE)
     image_url = models.URLField(max_length=100)
-    verified_id = models.ForeignKey(verified, on_delete=models.CASCADE)
+    # verified_id = models.ForeignKey(verified, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.device_type
@@ -72,7 +72,7 @@ class other_info(models.Model):
     details = models.CharField(max_length=1000)
     location_id = models.ForeignKey(location, on_delete=models.CASCADE)
     image_url = models.URLField(max_length=100)
-    verified_id = models.ForeignKey(verified, on_delete=models.CASCADE)
+    # verified_id = models.ForeignKey(verified, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.type
@@ -92,7 +92,7 @@ class crime_detail(models.Model):
     electronic_info_id = models.ForeignKey(electronic_info, on_delete=models.CASCADE)
     other_info_id = models.ForeignKey(other_info, on_delete=models.CASCADE)
     image_url = models.URLField(max_length=100)
-    verified_id = models.ForeignKey(verified, on_delete=models.CASCADE)
+    # verified_id = models.ForeignKey(verified, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.crime_type
@@ -107,7 +107,7 @@ class awareness_detail(models.Model):
     location_id = models.ForeignKey(location, on_delete=models.CASCADE)
     details = models.CharField(max_length=1000)
     awareness_type = models.CharField(max_length=100)
-    verified_id = models.ForeignKey(verified, on_delete=models.CASCADE)
+    # verified_id = models.ForeignKey(verified, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.awareness_type
