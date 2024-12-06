@@ -13,4 +13,8 @@ admin.site.register(other_info)
 
 admin.site.register(crime_detail)
 
+
 admin.site.register(awareness_detail)
+
+
+
