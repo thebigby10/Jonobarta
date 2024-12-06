@@ -1,3 +1,5 @@
+import LeftSidebar from "../../../components/LeftSidebar";
+
 const Home = () => {
     const arr = [1, 2, 3];
     return (
@@ -6,7 +8,9 @@ const Home = () => {
         style={{ height: "calc(100vh - 48px)" }}
       >
         {/* Left Sidebar */}
-        <div className="w-60 overflow-auto max-h-full space-y-4"></div>
+        <div className="w-60 overflow-auto max-h-full">
+            <LeftSidebar/>
+        </div>
   
         {/* Main Feed */}
         <div className="flex-1 space-y-4 overflow-auto max-h-full">
